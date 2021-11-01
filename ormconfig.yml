@@ -1,0 +1,6 @@
+default:
+    type: sqlite
+    database: database.sqlite
+    synchronize: true
+    entities:
+        - entities/*.ts
