@@ -11,7 +11,7 @@ import Faker from "faker"
 import Meal from "./Meal"
 
 @Entity()
-export default class Category {
+export default class Filter {
     @PrimaryGeneratedColumn()
     id!: number
 
@@ -21,16 +21,12 @@ export default class Category {
 
     @Column()
     title!: string
-
-    @Column()
-    color!: string
 }
 
-define(Category, (faker: typeof Faker) => {
-    const category = new Category()
+define(Filter, (faker: typeof Faker) => {
+    const filter = new Filter()
 
-    category.title = faker.lorem.words(2)
-    category.color = faker.internet.color()
+    filter.title = faker.lorem.words(2)
 
-    return category
+    return filter
 })
