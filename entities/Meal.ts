@@ -5,8 +5,6 @@ import {
     ManyToMany,
     PrimaryGeneratedColumn,
 } from "typeorm"
-import { define } from "typeorm-seeding"
-import Faker from "faker"
 
 import Category from "./Category"
 import Filter from "./Filter"
@@ -14,13 +12,19 @@ import Filter from "./Filter"
 @Entity()
 export default class Meal {
     @PrimaryGeneratedColumn()
-    id!: number
+    id?: number
 
-    @ManyToMany(() => Category)
+    @ManyToMany(type => Category, category => category.meals, {
+        cascade: ["update"],
+        eager: true,
+    })
     @JoinTable()
     categories!: Category[]
 
-    @ManyToMany(() => Filter)
+    @ManyToMany(type => Filter, filter => filter.meals, {
+        cascade: ["update"],
+        eager: true,
+    })
     @JoinTable()
     filters!: Filter[]
 
@@ -28,10 +32,10 @@ export default class Meal {
     title!: string
 
     @Column()
-    affordability!: string
+    affordability!: "affordable" | "pricey" | "luxurious"
 
     @Column()
-    complexity!: string
+    complexity!: "simple" | "challenging" | "hard"
 
     @Column()
     imageUrl!: string
@@ -39,26 +43,9 @@ export default class Meal {
     @Column()
     duration!: number
 
-    @Column({ type: "text" })
-    ingredients!: string // JSON
+    @Column({ type: "jsonb" })
+    ingredients!: string[]
 
-    @Column({ type: "text" })
-    steps!: string // JSON
+    @Column({ type: "jsonb" })
+    steps!: string[]
 }
-
-define(Meal, (faker: typeof Faker) => {
-    const meal = new Meal()
-
-    meal.title = faker.lorem.words(2)
-    meal.affordability = faker.lorem.words(2)
-    meal.complexity = faker.lorem.words(2)
-    meal.imageUrl = faker.image.imageUrl()
-    meal.ingredients = JSON.stringify(
-        new Array(5).fill(0).map(() => faker.lorem.words(2))
-    )
-    meal.steps = JSON.stringify(
-        new Array(10).fill(0).map(() => faker.lorem.sentence())
-    )
-
-    return meal
-})

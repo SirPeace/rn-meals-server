@@ -1,9 +1,14 @@
 import { Router } from "express"
+
 import CategoryRouter from "./CategoryRouter"
+import FilterRouter from "./FilterRouter"
+import MealRouter from "./MealRouter"
 
-const routes = Router()
-routes.use("/categories", CategoryRouter)
+const RootRouter = Router()
+RootRouter.use("/categories", CategoryRouter)
+RootRouter.use("/filters", FilterRouter)
+RootRouter.use("/meals", MealRouter)
 
-routes.get("/", (_, res) => res.send({ data: "Hello world!" }))
+RootRouter.get("/", async (_, res) => res.send({ data: "Hello World!" }))
 
-export default routes
+export default RootRouter
