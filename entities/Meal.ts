@@ -48,4 +48,7 @@ export default class Meal {
 
     @Column({ type: "jsonb" })
     steps!: string[]
+
+    @Column({ default: false })
+    isFavorite?: boolean
 }

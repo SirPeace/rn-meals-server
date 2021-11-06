@@ -7,11 +7,21 @@ import Meal from "../../entities/Meal"
 
 export default class MealSeeder implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<any> {
+        const categories = await connection.getRepository(Category).find()
+        const filters = await connection.getRepository(Filter).find()
+
         const meals: Meal[] = [
             {
                 title: "Spaghetti with Tomato Sauce",
-                categories: [1, 2] as any,
-                filters: [2, 3, 4] as any,
+                categories: [
+                    categories.find(cat => cat.title === "Italian"),
+                    categories.find(cat => cat.title === "Quick & Easy"),
+                ] as Category[],
+                filters: [
+                    filters.find(filter => filter.title === "Vegan"),
+                    filters.find(filter => filter.title === "Vegetarian"),
+                    filters.find(filter => filter.title === "Lactose Free"),
+                ] as Filter[],
                 affordability: "affordable",
                 complexity: "simple",
                 imageUrl:
@@ -34,11 +44,14 @@ export default class MealSeeder implements Seeder {
                     "The sauce will be done once the spaghetti are.",
                     "Feel free to add some cheese on top of the finished dish.",
                 ],
+                isFavorite: true,
             },
             {
                 title: "Toast Hawaii",
-                categories: [2] as any,
-                filters: [] as any,
+                categories: [
+                    categories.find(cat => cat.title === "Quick & Easy"),
+                ] as Category[],
+                filters: [],
                 affordability: "affordable",
                 complexity: "simple",
                 imageUrl:
@@ -59,8 +72,12 @@ export default class MealSeeder implements Seeder {
             },
             {
                 title: "Classic Hamburger",
-                categories: [3] as any,
-                filters: [4] as any,
+                categories: [
+                    categories.find(cat => cat.title === "Hamburgers"),
+                ] as Category[],
+                filters: [
+                    filters.find(filter => filter.title === "Lactose Free"),
+                ] as Filter[],
                 affordability: "pricey",
                 complexity: "simple",
                 imageUrl:
@@ -84,8 +101,10 @@ export default class MealSeeder implements Seeder {
             },
             {
                 title: "Wiener Schnitzel",
-                categories: [4] as any,
-                filters: [] as any,
+                categories: [
+                    categories.find(cat => cat.title === "German"),
+                ] as Category[],
+                filters: [],
                 affordability: "luxurious",
                 complexity: "challenging",
                 imageUrl:
@@ -113,8 +132,16 @@ export default class MealSeeder implements Seeder {
             },
             {
                 title: "Salad with Smoked Salmon",
-                categories: [2, 5, 10] as any,
-                filters: [1, 3, 4] as any,
+                categories: [
+                    categories.find(cat => cat.title === "Quick & Easy"),
+                    categories.find(cat => cat.title === "Light & Lovely"),
+                    categories.find(cat => cat.title === "Summer"),
+                ] as Category[],
+                filters: [
+                    filters.find(filter => filter.title === "Gluten Free"),
+                    filters.find(filter => filter.title === "Vegetarian"),
+                    filters.find(filter => filter.title === "Lactose Free"),
+                ] as Filter[],
                 affordability: "luxurious",
                 complexity: "simple",
                 imageUrl:
@@ -141,8 +168,14 @@ export default class MealSeeder implements Seeder {
             },
             {
                 title: "Delicious Orange Mousse",
-                categories: [6, 10] as any,
-                filters: [1, 3] as any,
+                categories: [
+                    categories.find(cat => cat.title === "Exotic"),
+                    categories.find(cat => cat.title === "Summer"),
+                ] as Category[],
+                filters: [
+                    filters.find(filter => filter.title === "Gluten Free"),
+                    filters.find(filter => filter.title === "Vegetarian"),
+                ] as Filter[],
                 affordability: "affordable",
                 complexity: "hard",
                 imageUrl:
@@ -167,11 +200,17 @@ export default class MealSeeder implements Seeder {
                     "Cool down again for at least 4 hours",
                     "Serve with orange peel",
                 ],
+                isFavorite: true,
             },
             {
                 title: "Pancakes",
-                categories: [7] as any,
-                filters: [1, 3] as any,
+                categories: [
+                    categories.find(cat => cat.title === "Breakfast"),
+                ] as Category[],
+                filters: [
+                    filters.find(filter => filter.title === "Gluten Free"),
+                    filters.find(filter => filter.title === "Vegetarian"),
+                ] as Filter[],
                 affordability: "affordable",
                 complexity: "simple",
                 imageUrl:
@@ -192,11 +231,17 @@ export default class MealSeeder implements Seeder {
                     "Heat a lightly oiled griddle or frying pan over medium high heat.",
                     "Pour or scoop the batter onto the griddle, using approximately 1/4 cup for each pancake. Brown on both sides and serve hot.",
                 ],
+                isFavorite: true,
             },
             {
                 title: "Creamy Indian Chicken Curry",
-                categories: [8] as any,
-                filters: [1, 4] as any,
+                categories: [
+                    categories.find(cat => cat.title === "Asian"),
+                ] as Category[],
+                filters: [
+                    filters.find(filter => filter.title === "Gluten Free"),
+                    filters.find(filter => filter.title === "Lactose Free"),
+                ] as Filter[],
                 affordability: "pricey",
                 complexity: "challenging",
                 imageUrl:
@@ -219,11 +264,17 @@ export default class MealSeeder implements Seeder {
                     "Add coconut milk",
                     "Serve with rice",
                 ],
+                isFavorite: true,
             },
             {
                 title: "Chocolate Souffle",
-                categories: [9] as any,
-                filters: [1, 3] as any,
+                categories: [
+                    categories.find(cat => cat.title === "French"),
+                ] as Category[],
+                filters: [
+                    filters.find(filter => filter.title === "Gluten Free"),
+                    filters.find(filter => filter.title === "Vegetarian"),
+                ] as Filter[],
                 affordability: "affordable",
                 complexity: "hard",
                 imageUrl:
@@ -265,8 +316,17 @@ export default class MealSeeder implements Seeder {
             },
             {
                 title: "Asparagus Salad with Cherry Tomatoes",
-                categories: [2, 5, 10] as any,
-                filters: [1, 2, 3, 4] as any,
+                categories: [
+                    categories.find(cat => cat.title === "Quick & Easy"),
+                    categories.find(cat => cat.title === "Light & Lovely"),
+                    categories.find(cat => cat.title === "Summer"),
+                ] as Category[],
+                filters: [
+                    filters.find(filter => filter.title === "Gluten Free"),
+                    filters.find(filter => filter.title === "Vegan"),
+                    filters.find(filter => filter.title === "Vegetarian"),
+                    filters.find(filter => filter.title === "Lactose Free"),
+                ] as Filter[],
                 affordability: "luxurious",
                 complexity: "simple",
                 imageUrl:
@@ -292,33 +352,9 @@ export default class MealSeeder implements Seeder {
         ]
 
         const mealRepository = connection.getRepository(Meal)
-        const categoryRepository = connection.getRepository(Category)
-        const filterRepository = connection.getRepository(Filter)
 
         await Promise.all(
-            meals.map(async meal => {
-                const mealCategories = await Promise.all(
-                    meal.categories.map((id: any) =>
-                        categoryRepository.findOne(id)
-                    )
-                )
-
-                mealCategories.forEach((category, index) => {
-                    if (category) meal.categories.push(category)
-                    else meal.categories.splice(index, 1)
-                })
-
-                const mealFilters = await Promise.all(
-                    meal.filters.map((id: any) => filterRepository.findOne(id))
-                )
-
-                mealFilters.forEach((filter, index) => {
-                    if (filter) meal.filters.push(filter)
-                    else meal.filters.splice(index, 1)
-                })
-
-                return await mealRepository.save(meal)
-            })
+            meals.map(async meal => await mealRepository.save(meal))
         )
     }
 }
