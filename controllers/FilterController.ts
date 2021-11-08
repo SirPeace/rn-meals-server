@@ -4,7 +4,7 @@ import { getRepository } from "typeorm"
 import Filter from "../entities/Filter"
 
 class FilterController {
-    public async index(req: Request, res: Response): Promise<Response> {
+    public async index(req: Request, res: Response) {
         return res.send({
             data: await getRepository(Filter).find(),
         })
